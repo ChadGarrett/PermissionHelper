@@ -16,6 +16,11 @@ This package can be used as unified way of requesting different types of device 
     - Reminders
     - Siri
 
+## Missing features (coming soon)
+
+- Individually package each permission as a product to avoid apps being rejected for having too many permission requests
+- Safety check that the info.plist contains the relevant permission asks
+
 ## Installation
 
 In Xcode, go to  `File` > `Swift Packages` > `Add package dependency` and enter: `https://github.com/ChadGarrett/PermissionHelper.git`.
