@@ -5,6 +5,12 @@
 //  Created by Chad Garrett on 2021/11/12.
 //
 
+#if PERMISSION_HELPER
+import PermissionHelper
+#endif
+
+#if PERMISSION_HELPER_CAMERA
+
 import AVFoundation
 
 extension PermissionHelper {
@@ -12,7 +18,7 @@ extension PermissionHelper {
 }
 
 public final class CameraPermission: PermissionHelperInterface {
-    func getStatus() -> PermissionHelper.PermissionType {
+    public func getStatus() -> PermissionHelper.PermissionType {
         switch AVCaptureDevice.authorizationStatus(for: .video) {
         case .notDetermined:
             return .undetermined
@@ -27,7 +33,7 @@ public final class CameraPermission: PermissionHelperInterface {
         }
     }
     
-    func requestPermission(completion: @escaping () -> Void) {
+    public func requestPermission(completion: @escaping () -> Void) {
         AVCaptureDevice.requestAccess(for: .video) { _ in
             DispatchQueue.main.async {
                 completion()
@@ -35,3 +41,5 @@ public final class CameraPermission: PermissionHelperInterface {
         }
     }
 }
+
+#endif

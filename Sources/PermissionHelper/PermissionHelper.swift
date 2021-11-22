@@ -18,7 +18,7 @@ extension PermissionHelper {
     }
 }
 
-protocol PermissionHelperInterface: AnyObject {
+public protocol PermissionHelperInterface: AnyObject {
     func getStatus() -> PermissionHelper.PermissionType
     
     /// Requests permission for the given feature and completes after the user has made a choice

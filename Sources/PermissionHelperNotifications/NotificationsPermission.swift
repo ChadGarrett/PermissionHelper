@@ -5,6 +5,12 @@
 //  Created by Chad Garrett on 2021/11/13.
 //
 
+#if PERMISSION_HELPER
+import PermissionHelper
+#endif
+
+#if PERMISSION_HELPER_NOTIFICATIONS
+
 import UserNotifications
 
 extension PermissionHelper {
@@ -12,7 +18,7 @@ extension PermissionHelper {
 }
 
 public final class NotificationsPermission: PermissionHelperInterface {
-    func getStatus() -> PermissionHelper.PermissionType {
+    public func getStatus() -> PermissionHelper.PermissionType {
         guard let authorizationStatus = fetchAuthorizationStatus()
         else { return .undetermined }
         
@@ -32,7 +38,7 @@ public final class NotificationsPermission: PermissionHelperInterface {
         }
     }
     
-    func requestPermission(completion: @escaping () -> Void) {
+    public func requestPermission(completion: @escaping () -> Void) {
         UNUserNotificationCenter.current().requestAuthorization(options: [.badge, .alert, .sound]) { _, _ in
             DispatchQueue.main.async {
                 completion()
@@ -58,3 +64,5 @@ public final class NotificationsPermission: PermissionHelperInterface {
         return settings?.authorizationStatus
     }
 }
+
+#endif

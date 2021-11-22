@@ -5,14 +5,20 @@
 //  Created by Chad Garrett on 2021/11/13.
 //
 
+#if PERMISSION_HELPER
+import PermissionHelper
+#endif
+
+#if PERMISSION_HELPER_CALENDAR
+
 import EventKit
 
 extension PermissionHelper {
-    public static var calendar = ContactsPermission()
+    public static var calendar = CalendarPermission()
 }
 
 public final class CalendarPermission: PermissionHelperInterface {
-    func getStatus() -> PermissionHelper.PermissionType {
+    public func getStatus() -> PermissionHelper.PermissionType {
         switch EKEventStore.authorizationStatus(for: .event) {
         case .notDetermined:
             return .undetermined
@@ -27,9 +33,11 @@ public final class CalendarPermission: PermissionHelperInterface {
         }
     }
     
-    func requestPermission(completion: @escaping () -> Void) {
+    public func requestPermission(completion: @escaping () -> Void) {
         EKEventStore().requestAccess(to: .event) { _, _ in
             completion()
         }
     }
 }
+
+#endif

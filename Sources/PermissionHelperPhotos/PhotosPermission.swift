@@ -5,6 +5,12 @@
 //  Created by Chad Garrett on 2021/11/13.
 //
 
+#if PERMISSION_HELPER
+import PermissionHelper
+#endif
+
+#if PERMISSION_HELPER_PHOTOS
+
 import Photos
 
 extension PermissionHelper {
@@ -12,7 +18,7 @@ extension PermissionHelper {
 }
 
 public final class PhotosPermission: PermissionHelperInterface {
-    func getStatus() -> PermissionHelper.PermissionType {
+    public func getStatus() -> PermissionHelper.PermissionType {
         switch PHPhotoLibrary.authorizationStatus() {
         case .notDetermined:
             return .undetermined
@@ -30,7 +36,7 @@ public final class PhotosPermission: PermissionHelperInterface {
     }
     
     /// Requests full permission to the photo library
-    func requestPermission(completion: @escaping () -> Void) {
+    public func requestPermission(completion: @escaping () -> Void) {
         PHPhotoLibrary.requestAuthorization { _ in
             DispatchQueue.main.async {
                 completion()
@@ -40,9 +46,11 @@ public final class PhotosPermission: PermissionHelperInterface {
     
     /// Requests permission to just add items to photos
     @available(iOS 14, *)
-    func requestWritePermission(completion: @escaping () -> Void) {
+    public func requestWritePermission(completion: @escaping () -> Void) {
         PHPhotoLibrary.requestAuthorization(for: .addOnly) { _ in
             completion()
         }
     }
 }
+
+#endif

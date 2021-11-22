@@ -5,6 +5,12 @@
 //  Created by Chad Garrett on 2021/11/13.
 //
 
+#if PERMISSION_HELPER
+import PermissionHelper
+#endif
+
+#if PERMISSION_HELPER_MUSIC
+
 import MediaPlayer
 
 extension PermissionHelper {
@@ -12,7 +18,7 @@ extension PermissionHelper {
 }
 
 public final class MusicPermission: PermissionHelperInterface {
-    func getStatus() -> PermissionHelper.PermissionType {
+    public func getStatus() -> PermissionHelper.PermissionType {
         switch MPMediaLibrary.authorizationStatus() {
         case .notDetermined:
             return .undetermined
@@ -27,9 +33,11 @@ public final class MusicPermission: PermissionHelperInterface {
         }
     }
     
-    func requestPermission(completion: @escaping () -> Void) {
+    public func requestPermission(completion: @escaping () -> Void) {
         MPMediaLibrary.requestAuthorization { _ in
             completion()
         }
     }
 }
+
+#endif

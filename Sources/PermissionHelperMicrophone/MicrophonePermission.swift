@@ -5,6 +5,12 @@
 //  Created by Chad Garrett on 2021/11/12.
 //
 
+#if PERMISSION_HELPER
+import PermissionHelper
+#endif
+
+#if PERMISSION_HELPER_MICROPHONE
+
 import AVFoundation
 
 extension PermissionHelper {
@@ -12,7 +18,7 @@ extension PermissionHelper {
 }
 
 public final class MicrophonePermission: PermissionHelperInterface {
-    func getStatus() -> PermissionHelper.PermissionType {
+    public func getStatus() -> PermissionHelper.PermissionType {
         switch AVAudioSession.sharedInstance().recordPermission {
         case .undetermined:
             return .undetermined
@@ -25,7 +31,7 @@ public final class MicrophonePermission: PermissionHelperInterface {
         }
     }
     
-    func requestPermission(completion: @escaping () -> Void) {
+    public func requestPermission(completion: @escaping () -> Void) {
         AVAudioSession.sharedInstance().requestRecordPermission { _ in
             DispatchQueue.main.async {
                 completion()
@@ -33,3 +39,5 @@ public final class MicrophonePermission: PermissionHelperInterface {
         }
     }
 }
+
+#endif

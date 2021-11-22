@@ -5,6 +5,12 @@
 //  Created by Chad Garrett on 2021/11/13.
 //
 
+#if PERMISSION_HELPER
+import PermissionHelper
+#endif
+
+#if PERMISSION_HELPER_SIRI
+
 import Intents
 
 extension SiriPermission {
@@ -12,7 +18,7 @@ extension SiriPermission {
 }
 
 public final class SiriPermission: PermissionHelperInterface {
-    func getStatus() -> PermissionHelper.PermissionType {
+    public func getStatus() -> PermissionHelper.PermissionType {
         switch INPreferences.siriAuthorizationStatus() {
         case .notDetermined:
             return .undetermined
@@ -27,7 +33,7 @@ public final class SiriPermission: PermissionHelperInterface {
         }
     }
     
-    func requestPermission(completion: @escaping () -> Void) {
+    public func requestPermission(completion: @escaping () -> Void) {
         INPreferences.requestSiriAuthorization { _ in
             DispatchQueue.main.async {
                 completion()
@@ -35,3 +41,5 @@ public final class SiriPermission: PermissionHelperInterface {
         }
     }
 }
+
+#endif

@@ -5,6 +5,12 @@
 //  Created by Chad Garrett on 2021/11/13.
 //
 
+#if PERMISSION_HELPER
+import PermissionHelper
+#endif
+
+#if PERMISSION_HELPER_REMINDERS
+
 import EventKit
 
 extension PermissionHelper {
@@ -12,7 +18,7 @@ extension PermissionHelper {
 }
 
 public final class RemindersPermission: PermissionHelperInterface {
-    func getStatus() -> PermissionHelper.PermissionType {
+    public func getStatus() -> PermissionHelper.PermissionType {
         switch EKEventStore.authorizationStatus(for: .reminder) {
         case .notDetermined:
             return .undetermined
@@ -27,10 +33,11 @@ public final class RemindersPermission: PermissionHelperInterface {
         }
     }
     
-    func requestPermission(completion: @escaping () -> Void) {
+    public func requestPermission(completion: @escaping () -> Void) {
         EKEventStore().requestAccess(to: .reminder) { _, _ in
             completion()
         }
     }
 }
 
+#endif
